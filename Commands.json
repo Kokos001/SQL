@@ -1,0 +1,6 @@
+"SHOW DATABASES;" :	"показать базы данных",
+"CREATE DATABASE Prices;" : "создать базу данных Prices",
+"USE Price;" : "выбор базы данных для дальнейшей работы",
+"SOURCE file.sql;" : "выполнить несколько SQL-команд из файла file.sql",
+"DROP DATABASE Prices;" : "удалить базу Prices",
+"SHOW TABLES;" : "показ таблиц в базе данных",
