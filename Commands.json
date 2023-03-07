@@ -4,3 +4,6 @@
 "SOURCE file.sql;" : "выполнить несколько SQL-команд из файла file.sql",
 "DROP DATABASE Prices;" : "удалить базу Prices",
 "SHOW TABLES;" : "показ таблиц в базе данных",
+"SELECT INTO;" : "копирование в новую БД, а также создание новых таблиц путем объединения столбцов из старых",
+	"SELECT * INTO new_table IN 'Backup.mdb' FROM old_table;" : "копирование всех столбцов из таблицы old_table в новую таблицу new_table в другую БД Backup.mdb",
+	"SELECT table1.column2, table2.column2 INTO new_table FROM table1 LEFT JOIN table2 ON table1.column1 = table2.column1;" : "создание новой таблицы из объединения столбцов двух таблиц"
