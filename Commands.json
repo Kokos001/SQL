@@ -1,4 +1,4 @@
-"SHOW DATABASES;" :	"показать базы данных",
+{"SHOW DATABASES;" : "показать базы данных",
 "CREATE DATABASE Prices;" : "создать базу данных Prices",
 "USE Price;" : "выбор базы данных для дальнейшей работы",
 "SOURCE file.sql;" : "выполнить несколько SQL-команд из файла file.sql",
@@ -6,4 +6,20 @@
 "SHOW TABLES;" : "показ таблиц в базе данных",
 "SELECT INTO;" : "копирование в новую БД, а также создание новых таблиц путем объединения столбцов из старых",
 	"SELECT * INTO new_table IN 'Backup.mdb' FROM old_table;" : "копирование всех столбцов из таблицы old_table в новую таблицу new_table в другую БД Backup.mdb",
-	"SELECT table1.column2, table2.column2 INTO new_table FROM table1 LEFT JOIN table2 ON table1.column1 = table2.column1;" : "создание новой таблицы из объединения столбцов двух таблиц"
+	"SELECT table1.column2, table2.column2 INTO new_table FROM table1 LEFT JOIN table2 ON table1.column1 = table2.column1;" : "создание новой таблицы из объединения столбцов двух таблиц",
+"CREATE TABLE;" : "создание таблицы",
+	"CREATE TABLE Names (Column1 int, column2 varchar(255) NOT NULL DEFAULT “A”, …)" : "создать таблицу Names с колонками: Column1 с форматом int и column2 с форматом varchar(255), DEFAULT “A” - указываем в столбце значение по умолчанию A, NOT NULL - столбец не может остаться пустым",
+	"data" : {
+		"int (auto_increment)" : "целые числа (автоматическая нумерация)",
+		"dec" : "десятичные числа",
+		"blob, text, memo" : "большой объем текста",
+		"char, varchar" : " строка, текст (в скобках размер в битах)",
+		"date, time, year" : "дата, время, год",
+		"float, double" : "данные с плавающей точкой",
+		"timestamp" : "хранит 4-ех байтное целое число, равное количеству секунд, прошедших с полуночи 1 января 1970 года по Гринвичу",
+		"boolean" : "true or false",
+		"null" : "пустые значения",
+		},
+	"CREATE TABLE <table_name1> (<col_name1> <col_type1>, <col_name2> <col_type2>, <col_name3> <col_type3>, PRIMARY KEY(<col_name1>), FOREIGN KEY(<col_name2>) REFERENCES <table_name2>(<col_name2>))" : "example",
+	
+}
