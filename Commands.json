@@ -21,5 +21,10 @@
 		"null" : "пустые значения",
 		},
 	"CREATE TABLE <table_name1> (<col_name1> <col_type1>, <col_name2> <col_type2>, <col_name3> <col_type3>, PRIMARY KEY(<col_name1>), FOREIGN KEY(<col_name2>) REFERENCES <table_name2>(<col_name2>))" : "example",
-	
+	"DESCRIBE (DESC) Names" : "просмотр сведений о таблице",
+	"INSERT INTO Names" : "добавление данных в таблицу Names",
+		"INSERT INTO <table_name> (<column1>, <column2>, <column3>, …) VALUES (<value1>, <value2>, <value3>, …);" : "Пример, если во все столбцы то их указывать необязательно",
+	" INSERT INTO SELECT" : "The INSERT INTO SELECT statement copies data from one table and inserts it into another table. The INSERT INTO SELECT statement requires that the data types in source and target tables match",
+	"example" : "INSERT INTO table2 (column1, column2, column3, ...) SELECT column1, column2, column3, … FROM table1 WHERE condition;",
+	"DROP TABLE Names" : "удалить таблицу Names",
 }
