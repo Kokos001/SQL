@@ -63,6 +63,8 @@ insert into employee_salary (employee_id, salary_id)
 					(26, 11), (27, 12), (28, 13), (29, 14), (30, 15),
 					(31, 1), (32, 2), (33, 3), (34, 4), (35, 5),
 					(36, 6), (37, 7), (38, 8), (39, 9), (40, 10);
+				
+UPDATE employee_salary SET salary_id = 11 WHERE salary_id = 7;				
 
 create table roles (id serial primary key, 
 				role_name varchar(50) not null unique);

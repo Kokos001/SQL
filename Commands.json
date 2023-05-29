@@ -27,4 +27,5 @@
 	" INSERT INTO SELECT" : "The INSERT INTO SELECT statement copies data from one table and inserts it into another table. The INSERT INTO SELECT statement requires that the data types in source and target tables match",
 	"example" : "INSERT INTO table2 (column1, column2, column3, ...) SELECT column1, column2, column3, … FROM table1 WHERE condition;",
 	"DROP TABLE Names" : "удалить таблицу Names",
+	"DISTINCT" : "используется для выбора уникальных значений из столбца или комбинации столбцов в результирующем наборе данных."
 }
