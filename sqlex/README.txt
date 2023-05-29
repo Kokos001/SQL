@@ -1,4 +1,4 @@
-There are SQL tasks decisions from "sql-ex.ru" site in this folder.
+There are SQL tasks solutions from "sql-ex.ru" site in this folder.
 
 Review DB:
 The database scheme consists of four tables:
