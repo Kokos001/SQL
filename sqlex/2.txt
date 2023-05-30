@@ -1,0 +1,7 @@
+Task: List all printer makers. Result set: maker.
+
+Solution: 
+SELECT maker 
+FROM Product 
+WHERE type = 'Printer' 
+Group by maker
