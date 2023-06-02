@@ -1,0 +1,6 @@
+Task: Find the makers of PCs with a processor speed of 450 MHz or more. Result set: maker.
+
+Solution: 
+SELECT DISTINCT maker FROM Product 
+LEFT JOIN PC ON Product.model = PC.model
+WHERE speed >= 450

@@ -1,0 +1,6 @@
+Task: Find the makers producing PCs but not laptops.
+
+Solution: 
+SELECT DISTINCT maker FROM Product WHERE maker IN (
+select maker FROM Product WHERE type = 'PC') and 
+maker NOT IN(select maker FROM Product WHERE type = 'Laptop')
