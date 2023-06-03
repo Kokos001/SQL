@@ -1,0 +1,5 @@
+Task: Find out the average speed of PCs.
+
+
+Solution: 
+Select avg(speed) FROM PC
