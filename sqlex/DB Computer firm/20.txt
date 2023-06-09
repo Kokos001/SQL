@@ -1,0 +1,10 @@
+Task: Find the makers producing at least three distinct models of PCs.
+Result set: maker, number of PC models.
+
+
+Solution: 
+SELECT maker, COUNT(model) as Number_of_PC
+FROM Product 
+WHERE type = 'PC'
+GROUP BY maker
+HAVING COUNT(DISTINCT model) >= 3
