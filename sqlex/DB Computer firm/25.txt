@@ -1,0 +1,19 @@
+Task: Find the printer makers also producing PCs with the lowest RAM capacity and the highest processor speed of all PCs having the lowest RAM capacity.
+Result set: maker.
+
+Solution: 
+SELECT DISTINCT maker FROM Product WHERE type = 'Printer' AND maker IN (SELECT DISTINCT p1.maker
+FROM Product p1
+JOIN PC pc1 ON p1.model = pc1.model
+WHERE pc1.ram = (
+  SELECT MIN(pc2.ram)
+  FROM PC pc2
+)
+AND pc1.speed = (
+  SELECT MAX(pc3.speed)
+  FROM PC pc3
+  WHERE pc3.ram = (
+    SELECT MIN(pc4.ram)
+    FROM PC pc4
+  )
+))
