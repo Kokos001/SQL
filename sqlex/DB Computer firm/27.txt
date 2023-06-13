@@ -1,0 +1,12 @@
+Task: [A[B[B[B[B[B[B[B[B[B[B[B[BFind out the average hard disk drive capacity of PCs produced by makers who also manufacture printers.
+Result set: maker, average HDD capacity.
+
+Solution: SELECT p.maker, AVG(pc.hd) AS AVG_hdd_capacity
+FROM Product p
+JOIN PC pc ON p.model = pc.model
+WHERE p.maker IN (
+  SELECT maker
+  FROM Product
+  WHERE type = 'Printer'
+)
+GROUP BY p.maker
