@@ -1,0 +1,5 @@
+Task: Using Product table, find out the number of makers who produce only one model.
+Solution: SELECT COUNT(maker) as qty FROM (
+SELECT maker, COUNT(model) AS num_models FROM Product p1
+GROUP BY maker
+HAVING COUNT(model) = 1) a
