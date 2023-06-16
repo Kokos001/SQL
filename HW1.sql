@@ -1,5 +1,5 @@
-create table employees (id serial primary key, 
-						employee_name varchar(50) not null);
+1) Создать таблицу employees и наполнить таблицу employee 70 строками: 
+create table employees (id serial primary key, employee_name varchar(50) not null);
 
 insert into employees (employee_name) 
 			values ('John Smith'), ('Mary Johnson'),
@@ -40,7 +40,8 @@ insert into employees (employee_name)
 ('Alyssa Cooper'), ('Connor Nelson'),
 ('Makayla Brown'), ('Gavin Davis'),
 ('Samantha Adams');
-					
+
+2) Создать таблицу salary и наполнить таблицу salary 15 строками					
 create table salary (id serial primary key, 
 					monthly_salary int not null);
 
@@ -50,7 +51,8 @@ insert into salary (monthly_salary)
 					(1600), (1700), (1800),
 					(1900), (2000), (2100),
 					(2200), (2300), (2400);
-				
+
+3) Создать таблицу employee_salary и наполнить таблицу employee_salary 40 строками				
 create table employee_salary (id serial primary key, 
 				employee_id int not null unique,
 				salary_id int not null);	
@@ -64,10 +66,12 @@ insert into employee_salary (employee_id, salary_id)
 					(31, 1), (32, 2), (33, 3), (34, 4), (35, 5),
 					(36, 6), (37, 7), (38, 8), (39, 9), (40, 10);
 				
-UPDATE employee_salary SET salary_id = 11 WHERE salary_id = 7;				
-
+			
+4) Создать таблицу roles, поменять тип столба role_name с int на varchar(30), наполнить таблицу roles 20 строками:
+ 
 create table roles (id serial primary key, 
 				role_name varchar(50) not null unique);
+				
 alter table roles alter column role_name type varchar(30);
 
 insert into roles (role_name) 
@@ -82,6 +86,7 @@ insert into roles (role_name)
 					('Sales manager'), ('Junior Automation QA engineer'),
 					('Middle Automation QA engineer'), ('Senior Automation QA engineer');
 
+5) Создать таблицу roles_employee, наполнить таблицу roles_employee 40 строками
 create table roles_employee (id serial primary key, 
 				employee_id int not null unique references employees(id),
 				role_id int not null references roles(id));
