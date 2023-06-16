@@ -1,0 +1,7 @@
+Task: 
+Get the ships sunk in the North Atlantic battle.
+Result set: ship.
+Solution:
+SELECT ship FROM Outcomes
+WHERE battle = 'North Atlantic' AND result = 'sunk'
+
