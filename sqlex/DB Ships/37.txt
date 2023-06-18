@@ -1,0 +1,10 @@
+Task:
+Find classes for which only one ship exists in the database (including the Outcomes table).
+Solution:
+SELECT class FROM
+(SELECT class, name FROM Ships
+UNION
+SELECT c.class, o.ship FROM Classes c JOIN Outcomes o
+ON c.class = o.ship) a
+GROUP BY class
+HAVING count(name) = 1
