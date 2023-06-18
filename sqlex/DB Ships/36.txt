@@ -1,0 +1,7 @@
+Task:
+List the names of lead ships in the database (including the Outcomes table).
+Solution:
+SELECT name FROM Ships WHERE name = class
+UNION
+SELECT ship FROM Outcomes o JOIN Classes c ON o.ship = c.class
+WHERE o.ship = c.class
