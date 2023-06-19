@@ -1,0 +1,9 @@
+Task: 
+Find the ships that `survived for future battles`; that is, after being damaged in a battle, they participated in another one, which occurred later.
+Solution:
+SELECT DISTINCT o.ship FROM Outcomes o
+JOIN Battles b ON o.battle = b.name
+JOIN (SELECT o.ship, MAX(b.date) as max_date FROM Outcomes o
+JOIN Battles b ON o.battle = b.name
+GROUP BY o.ship)  AS Max ON o.ship = Max.ship
+WHERE result = 'damaged' AND date < max_date
