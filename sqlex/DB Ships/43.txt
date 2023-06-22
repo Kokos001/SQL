@@ -1,0 +1,7 @@
+Task:
+Get the battles that occurred in years when no ships were launched into water.
+Solution:
+SELECT b.name
+FROM Battles b
+LEFT JOIN Ships s ON YEAR(b.date) = s.launched
+WHERE s.launched IS NULL
