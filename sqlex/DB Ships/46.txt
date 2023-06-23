@@ -1,0 +1,11 @@
+Task:
+For each ship that participated in the Battle of Guadalcanal, get its name, displacement, and the number of guns.
+Solution:
+SELECT ship, displacement, numGuns FROM (
+SELECT ship, CASE WHEN class IS NULL THEN ship
+                  ELSE class END AS class
+ FROM (
+SELECT ship FROM Outcomes 
+WHERE battle = 'Guadalcanal') a LEFT JOIN Ships
+ON a.ship = Ships.name) b
+Left join Classes c ON b.class = c.class
