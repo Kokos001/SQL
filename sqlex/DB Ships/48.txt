@@ -1,0 +1,10 @@
+Task:
+Find the ship classes having at least one ship sunk in battles.
+Solution:
+
+SELECT DISTINCT class FROM (
+SELECT ship, CASE WHEN class IS NULL THEN ship ELSE class END AS class
+ FROM (
+SELECT ship FROM Outcomes
+WHERE result = 'sunk') a LEFT JOIN Ships
+ON a.ship = Ships.name) z WHERE class IN (select class from Classes)
