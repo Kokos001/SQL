@@ -1,0 +1,12 @@
+Task:
+Find the names of the ships having a gun caliber of 16 inches (including ships in the Outcomes table).
+Solution:
+SELECT DISTINCT b.ship FROM
+(SELECT a.ship, CASE WHEN s.class IS NULL THEN a.ship ELSE s.class END AS class
+ FROM 
+(SELECT ship FROM Outcomes
+UNION 
+SELECT name FROM Ships) a LEFT JOIN Ships s
+ON a.ship = s.name) b JOIN Classes c
+ON b.class = c.class
+WHERE c.bore = 16
