@@ -1,0 +1,6 @@
+Task:
+Find the battles in which Kongo-class ships from the Ships table were engaged.
+Solution:
+SELECT Distinct battle FROM Outcomes o JOIN Ships s
+ON o.ship = s.name
+WHERE class = 'Kongo'
