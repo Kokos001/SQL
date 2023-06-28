@@ -1,0 +1,32 @@
+Task:
+Find the countries that have lost all their ships in battles.
+Solution:
+SELECT country
+FROM (
+    SELECT this_table_2.country, this_table_2.cnt FROM (
+        SELECT country, COUNT(name) cnt FROM (
+            SELECT country, name FROM Classes
+            JOIN Ships ON Classes.class = Ships.class
+            UNION
+            SELECT country, ship FROM Classes
+            JOIN Outcomes ON class = ship
+        ) this_table GROUP BY country
+    ) this_table_2 JOIN (
+        SELECT country, cnt FROM (
+            SELECT country, COUNT(name) cnt FROM (
+                SELECT country, name FROM Classes
+                JOIN Ships ON Classes.class = Ships.class
+                WHERE name IN (
+                    SELECT ship
+                    FROM Outcomes
+                    WHERE result = 'sunk')
+                    UNION
+                    SELECT country, ship FROM Classes
+                    JOIN Outcomes ON class = ship
+                    WHERE result = 'sunk'
+
+            ) this_table_3 GROUP BY country
+        ) this_table_4
+    ) this_table_5 ON this_table_2.country = this_table_5.country AND this_table_2.cnt = this_table_5.cnt
+) final_table
+
