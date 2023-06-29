@@ -1,0 +1,16 @@
+Task:
+Find the names of the ships with the largest number of guns among all ships having the same displacement (including ships in the Outcomes table).
+Solution:
+SELECT name FROM
+(SELECT name, numGuns, displacement FROM Classes
+JOIN Ships ON Classes.class = Ships.class
+UNION
+SELECT ship, numGuns, displacement FROM Classes
+JOIN Outcomes ON class = ship) a 
+JOIN 
+(SELECT MAX(numGuns) as max_guns, displacement FROM (SELECT name, numGuns, displacement FROM Classes
+JOIN Ships ON Classes.class = Ships.class
+UNION
+SELECT ship, numGuns, displacement FROM Classes
+JOIN Outcomes ON class = ship) aa
+GROUP BY displacement) b ON a.numGuns = b.max_guns AND a.displacement = b.displacement
