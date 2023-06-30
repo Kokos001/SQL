@@ -1,0 +1,7 @@
+Task:
+With a precision of two decimal places, determine the average number of guns for the battleship classes.
+Solution:
+SELECT CAST(AVG_numGuns AS DECIMAL(10, 2)) AS AVG FROM(
+SELECT AVG(CAST(numGuns AS DECIMAL(10, 2))) AS AVG_numGuns FROM Classes
+WHERE type = 'bb'
+) a
