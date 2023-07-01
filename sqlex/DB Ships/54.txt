@@ -1,0 +1,12 @@
+Task:
+With a precision of two decimal places, determine the average number of guns for all battleships (including the ones in the Outcomes table).
+Solution:
+SELECT CAST(AVG(numGuns) AS DECIMAL(5, 2)) as AVG_numGuns FROM
+(SELECT CAST(numGuns AS DECIMAL(5, 2)) AS numGuns FROM (SELECT name, numGuns FROM Classes
+JOIN Ships ON Classes.class = Ships.class
+WHERE type = 'bb'
+UNION
+SELECT ship, numGuns FROM Classes
+JOIN Outcomes ON class = ship
+WHERE type = 'bb') a
+) b
