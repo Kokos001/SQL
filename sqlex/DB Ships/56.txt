@@ -1,0 +1,10 @@
+Task:
+For each class, find out the number of ships of this class that were sunk in battles.
+Result set: class, number of ships sunk.
+Solution:
+SELECT Classes.class, COUNT(result) as Sunks FROM Classes LEFT JOIN 
+(SELECT ship, CASE WHEN class IS NULL THEN ship ELSE class END AS class, 
+result FROM Outcomes left join Ships 
+ON ship = name WHERE result = 'sunk') a 
+ON Classes.class = a.class
+GROUP BY Classes.class
