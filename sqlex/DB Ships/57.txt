@@ -1,0 +1,17 @@
+Task:
+For classes having irreparable combat losses and at least three ships in the database, display the name of the class and the number of ships sunk.
+
+Solution:
+SELECT Classes.class, COUNT(result) as Sunks FROM Classes  JOIN 
+(SELECT ship, CASE WHEN class IS NULL THEN ship ELSE class END AS class, 
+result FROM Outcomes left join Ships 
+ON ship = name WHERE result = 'sunk') a ON Classes.class = a.class
+GROUP BY Classes.class
+HAVING Classes.class IN (SELECT class FROM (
+SELECT ship, CASE WHEN class IS NULL THEN ship ELSE class END AS class FROM Outcomes left join Ships 
+ON ship = name
+UNION 
+SELECT name, class FROM Ships) a
+GROUP BY class
+HAVING count(ship) >= 3
+)
