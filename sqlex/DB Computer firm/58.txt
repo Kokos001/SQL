@@ -1,0 +1,17 @@
+Task:
+For each product type and maker in the Product table, find out, with a precision of two decimal places, the percentage ratio of the number of models of the actual type produced by the actual maker to the total number of models by this maker.
+Result set: maker, product type, the percentage ratio mentioned above.
+Solution:
+SELECT main_maker ,main_type ,CONVERT(NUMERIC(6,2),((sub_num*100.00)/(total_num*100.00)*100.00))  
+FROM (SELECT COUNT(p5.model) total_num ,p5.maker main_maker 
+FROM product p5 
+GROUP BY p5.maker) p6 
+JOIN (SELECT p3.maker sub_maker ,p3.type main_type ,COUNT(p4.model) sub_num 
+FROM (SELECT p1.maker maker, p2.type type 
+FROM product p1 
+CROSS JOIN product p2 
+GROUP BY p1.maker, p2.type) p3 
+LEFT JOIN product p4 on p3.maker = p4.maker and p3.type = p4.type 
+GROUP BY  p3.maker,p3.type) p7 
+ON p7.sub_maker = p6.main_maker
+ORDER BY main_maker
