@@ -1,0 +1,11 @@
+Task:
+For the database with money transactions being recorded not more than once a day, calculate the total cash balance of all buy-back centers.
+
+Solution:
+SELECT sum(remain) as Remain FROM
+(SELECT a.point,  CASE WHEN o IS NULL THEN i ELSE i-o END remain FROM 
+(SELECT point, sum(inc) AS i FROM Income_o 
+GROUP BY point) AS A 
+LEFT JOIN 
+(SELECT point, sum(out) AS o
+FROM Outcome_o GROUP BY point) AS B on A.point=B.point) AS z
