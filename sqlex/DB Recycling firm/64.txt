@@ -1,0 +1,20 @@
+Task:
+Using the Income and Outcome tables, determine for each buy-back center the days when it received funds but made no payments, and vice versa.
+Result set: point, date, type of operation (inc/out), sum of money per day.
+
+Solution:
+SELECT a.point, a.date, a.type, sum_in as sum FROM 
+(SELECT point, date, 'inc' AS type, sum(inc) AS sum_in FROM Income
+GROUP BY point, date) a LEFT JOIN
+(SELECT point, date, 'out' AS type, sum(out) AS sum_out FROM Outcome
+GROUP BY point, date) b
+ON a.point=b.point AND a.date=b.date
+WHERE sum_out is null
+UNION
+SELECT b.point, b.date, b.type, sum_out as sum FROM 
+(SELECT point, date, 'inc' AS type, sum(inc) AS sum_in FROM Income
+GROUP BY point, date) a Right JOIN
+(SELECT point, date, 'out' AS type, sum(out) AS sum_out FROM Outcome
+GROUP BY point, date) b
+ON a.point=b.point AND a.date=b.date
+WHERE sum_in is null
