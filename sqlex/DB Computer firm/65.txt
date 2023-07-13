@@ -1,0 +1,11 @@
+Task:
+Number the unique pairs {maker, type} in the Product table, ordering them as follows:
+- maker name in ascending order;
+- type of product (type) in the order PC, Laptop, Printer.
+If a manufacturer produces more than one type of product, its name should be displayed in the first row only;
+other rows for THIS manufacturer should contain an empty string (').
+
+Solution:
+SELECT num, CASE WHEN ROW_NUMBER() OVER (PARTITION BY maker ORDER BY maker) = 1 THEN maker ELSE '' END AS maker, type FROM
+(SELECT row_number() over(ORDER BY maker, case WHEN type = 'PC' THEN 1 WHEN type = 'Laptop' THEN 2 ELSE 3 END) num, maker, type FROM (
+SELECT DISTINCT maker, type FROM Product) a) b
