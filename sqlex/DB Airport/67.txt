@@ -1,0 +1,13 @@
+Task:
+Find out the number of routes with the greatest number of flights (trips).
+Notes.
+1) A - B and B - A are to be considered DIFFERENT routes.
+2) Use the Trip table only.
+
+Solution:
+SELECT COUNT(tf) AS qty FROM 
+(SELECT town_from as tf, town_to, COUNT(plane) AS cp FROM Trip 
+GROUP BY town_from, town_to 
+HAVING COUNT(plane) >= ALL 
+(SELECT COUNT(plane)  FROM Trip 
+GROUP BY town_from, town_to) ) AS b
