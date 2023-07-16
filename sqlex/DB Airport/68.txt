@@ -1,0 +1,16 @@
+Task:
+Find out the number of routes with the greatest number of flights (trips).
+Notes.
+1) A - B and B - A are to be considered the SAME route.
+2) Use the Trip table only.
+
+Solution:
+WITH rc AS (
+  SELECT
+  COUNT(*) AS routes FROM trip
+  GROUP BY
+    CASE WHEN town_from > town_to THEN town_from ELSE town_to end,
+    CASE WHEN town_from < town_to THEN town_from ELSE town_to end)
+
+SELECT COUNT0(*) AS route_count FROM rc
+WHERE routes=(SELECT MAX(routes) FROM rc)
