@@ -1,0 +1,11 @@
+Task:
+Using the Income and Outcome tables, find out the balance for each buy-back center by the end of each day when funds were received or payments were made.
+Note that the cash isn’t withdrawn, and the unspent balance/debt is carried forward to the next day.
+Result set: buy-back center ID (point), date in dd/mm/yyyy format, unspent balance/debt by the end of this day.
+
+Solution:
+SELECT point, CONVERT(char(10), date, 103) date, SUM(SUM(money)) OVER (partition by point order by date) money
+FROM 
+(SELECT point, date, inc AS money FROM Income
+UNION ALL
+SELECT point, date, -out FROM Outcome ) a GROUP BY point, date
