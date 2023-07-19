@@ -1,0 +1,13 @@
+Task:
+Get the battles in which at least three ships from the same country took part
+Solution:
+SELECT DISTINCT battle FROM 
+(SELECT battle, ship, country FROM Outcomes o JOIN Classes c
+ON o.ship = c.class
+UNION 
+SELECT battle, ship, country FROM (
+SELECT battle, ship, class FROM Outcomes o JOIN Ships s
+ON o.ship = s.name) a JOIN Classes c 
+ON a.class = c.class) t
+GROUP BY battle, country
+HAVING count(ship) >= 3
