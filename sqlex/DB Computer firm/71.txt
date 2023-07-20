@@ -1,0 +1,8 @@
+Task: 
+Find the PC makers with all personal computer models produced by them being present in the PC table.
+Solution: 
+SELECT DISTINCT maker FROM product 
+WHERE type = 'PC' and maker NOT IN
+(SELECT maker FROM Product as p 
+LEFT JOIN PC ON p.model = PC.model
+WHERE p.type = 'PC' and PC.model IS NULL)
