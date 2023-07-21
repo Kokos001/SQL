@@ -1,0 +1,11 @@
+Task: 
+Among the customers using a single airline, find distinct passengers who have flown most frequently. Result set: passenger name, number of trips.
+
+Solution:
+SELECT TOP 1 WITH TIES name, maxs FROM passenger JOIN 
+(SELECT pID, max(counts) maxs FROM ( 
+SELECT pass_in_trip.ID_psg pID, Trip.ID_comp, count(*) counts 
+FROM pass_in_trip JOIN trip ON trip.trip_no = pass_in_trip.trip_no
+GROUP BY pass_in_trip.ID_psg, Trip.ID_comp
+) AS R GROUP BY pID HAVING count(*) = 1
+) AS R1 ON ID_psg = pID ORDER BY maxs DESC
