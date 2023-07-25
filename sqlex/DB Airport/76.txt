@@ -1,0 +1,15 @@
+Task:
+Find the overall flight duration for passengers who never occupied the same seat.
+Result set: passenger name, flight duration in minutes.
+Solution:
+SELECT name, sum_time FROM (
+SELECT ID_psg, SUM(minutes) AS sum_time FROM (
+SELECT ID_psg, DATEDIFF (minute, time_out, DATEADD(DAY,IIF(time_in<time_out,1,0),time_in)) as minutes FROM (
+SELECT ID_psg, trip_no FROM Pass_in_trip
+WHERE ID_psg NOT IN (
+SELECT DISTINCT ID_psg FROM Pass_in_trip
+GROUP BY ID_psg, place
+HAVING COUNT(place) > 1)) a LEFT JOIN Trip
+ON a.trip_no = Trip.trip_no) b
+GROUP BY ID_psg) c LEFT JOIN Passenger p
+ON c.ID_psg = p.ID_psg
