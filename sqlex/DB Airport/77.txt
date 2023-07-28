@@ -1,0 +1,9 @@
+Task:
+Find the days with the maximum number of flights departed from Rostov. Result set: number of trips, date.
+Solution:
+WITH QTY AS ( SELECT COUNT(trip_no) as qty, date FROM (
+SELECT DISTINCT p.trip_no, date FROM Trip t JOIN Pass_in_trip p
+ON t.trip_no = p.trip_no
+WHERE town_from = 'Rostov') a
+GROUP BY date) 
+SELECT * FROM QTY WHERE qty in (SELECT MAX(qty) FROM QTY)
