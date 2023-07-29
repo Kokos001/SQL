@@ -1,0 +1,10 @@
+Task:
+For each battle, get the first and the last day of the month when the battle occurred.
+Result set: battle name, first day of the month, last day of the month.
+Note: output dates in yyyy-mm-dd format.
+
+Solution:
+SELECT name, 
+REPLACE(CONVERT(CHAR(12), DATEADD(m, DATEDIFF(m,0,date),0), 102),'.','-') AS first_day,
+REPLACE(CONVERT(CHAR(12), DATEADD(s,-1,DATEADD(m, DATEDIFF(m, 0, date) + 1,0)), 102), '.', '-') AS last_day
+FROM Battles
