@@ -1,0 +1,16 @@
+Task:
+Get the passengers who, compared to others, spent most time flying.
+Result set: passenger name, total flight duration in minutes.
+
+Solution:
+WITH TB AS (
+SELECT ID_psg,  SUM(CASE WHEN time_in > time_out THEN DATEDIFF(mi, time_out, time_in)
+ELSE DATEDIFF (minute, time_out, DATEADD(DAY,IIF(time_in<time_out,1,0),time_in)) END) AS min
+FROM Pass_in_trip p JOIN
+Trip t ON p.trip_no = t.trip_no
+GROUP BY ID_psg)
+
+SELECT name, min FROM Passenger JOIN (
+SELECT ID_psg, min FROM TB 
+WHERE min = (Select MAX(min) FROM TB)) b
+ON Passenger.ID_psg = b.ID_psg
