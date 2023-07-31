@@ -1,0 +1,9 @@
+Task:
+Find the computer equipment makers not producing any PC models absent in the PC table.
+
+Solution:
+SELECT DISTINCT maker FROM Product
+WHERE maker NOT IN
+(SELECT DISTINCT maker FROM Product
+WHERE type = 'PC' AND model NOT IN 
+(SELECT model FROM PC))
