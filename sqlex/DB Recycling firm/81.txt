@@ -1,0 +1,10 @@
+Task:
+For each month-year combination with the maximum sum of payments (out), retrieve all records from the Outcome table.
+Solution:
+SELECT o.* FROM Outcome o
+INNER JOIN (
+	SELECT TOP 1 WITH TIES YEAR(date) AS Year, MONTH(date) AS Month, SUM(out) AS ALL_TOTAL
+	FROM Outcome
+	GROUP BY YEAR(date), MONTH(date)
+	ORDER BY ALL_TOTAL DESC
+) R ON YEAR(o.date) = R.Year AND MONTH(o.date) = R.Month
