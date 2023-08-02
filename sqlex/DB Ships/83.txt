@@ -1,0 +1,29 @@
+Task:
+Find out the names of the ships in the Ships table that meet at least four criteria from the following list:
+numGuns = 8,
+bore = 15,
+displacement = 32000,
+type = bb,
+launched = 1915,
+class = Kongo,
+country = USA.
+
+Solution:
+WITH T AS (SELECT Ships.name, Classes.*, Ships.launched  FROM Ships JOIN Classes ON Ships.class= Classes.class)
+
+SELECT name FROM (
+SELECT name, CASE WHEN numGuns = 8 THEN 1  END AS s FROM T
+UNION
+SELECT name, CASE  WHEN bore = 15 THEN 2 END FROM T
+UNION
+SELECT name, CASE  WHEN displacement = 32000 THEN 3 END FROM T
+UNION
+SELECT name, CASE  WHEN type = 'bb' THEN 4 END FROM T
+UNION
+SELECT name, CASE  WHEN launched = 1915 THEN 5 END FROM T
+UNION
+SELECT name, CASE  WHEN class ='Kongo' THEN 6 END FROM T
+UNION
+SELECT name, CASE  WHEN country = 'USA' THEN 7 END FROM T)  a
+GROUP BY name
+HAVING COUNT(s) >= 4
