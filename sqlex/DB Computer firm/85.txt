@@ -1,0 +1,9 @@
+Task: 
+Get makers producing either printers only or personal computers only; in case of PC manufacturers they should produce at least 3 models.
+
+Solution:
+SELECT maker FROM product
+GROUP BY maker
+HAVING COUNT(DISTINCT type) = 1 AND
+       (MIN(type) = 'printer' OR
+       (MIN(type) = 'pc' and COUNT(model) >= 3))
