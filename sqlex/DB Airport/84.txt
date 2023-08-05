@@ -1,0 +1,19 @@
+Task:
+For each airline, calculate the number of passengers carried in April 2003 (if there were any) by ten-day periods. Consider only flights that departed that month.
+Result set: company name, number of passengers carried for each ten-day period.
+
+Solution:
+WITH t AS (
+    SELECT c.name, ID_psg, date
+    FROM Trip t
+    JOIN Pass_in_trip p ON t.trip_no = p.trip_no
+    JOIN Company c ON t.ID_comp = c.ID_comp
+    WHERE YEAR(date) = 2003 AND MONTH(date) = 04
+)
+
+SELECT name, 
+       SUM(CASE WHEN DAY(date) >= 1 AND DAY(date) <= 10 THEN 1 ELSE 0 END) AS [1-10],
+       SUM(CASE WHEN DAY(date) >= 11 AND DAY(date) <= 20 THEN 1 ELSE 0 END) AS [11-20],
+       SUM(CASE WHEN DAY(date) >= 21 AND DAY(date) <= 31 THEN 1 ELSE 0 END) AS [21-31]
+FROM t
+GROUP BY name
