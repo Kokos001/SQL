@@ -1,0 +1,13 @@
+Task:
+For each maker, list the types of products he produces in alphabetic order, using a slash ("/") as a delimiter.
+Result set: maker, list of product types.
+Solution:
+WITH t AS (SELECT DISTINCT maker, type FROM Product)
+
+SELECT maker, 
+       STUFF((SELECT '/' + type
+              FROM t
+              WHERE p1.maker = t.maker
+              ORDER BY type
+              FOR XML PATH('')), 1, 1, '') AS types
+FROM (SELECT DISTINCT maker FROM Product) p1
