@@ -1,0 +1,29 @@
+Task:
+Supposing a passenger lives in the town his first flight departs from, find non-Muscovites who have visited Moscow more than once.
+Result set: passenger's name, number of visits to Moscow.
+
+Solution:
+WITH t AS (
+  -- passangers and their trips
+  SELECT pit.date, id_psg, t.*
+  FROM pass_in_trip pit
+  JOIN trip t ON pit.trip_no=t.trip_no
+)
+, fo AS (
+  -- get first fly date+time
+  SELECT id_psg, MIN(date+time_out) as date_out
+  FROM t GROUP BY id_psg
+)
+, nm as (
+  -- those who are not from Moscow
+  SELECT fo.id_psg
+  FROM fo join t ON fo.date_out=(t.date+t.time_out)
+  WHERE town_from!='Moscow'
+)
+
+SELECT
+  p.name, count(*)
+FROM t JOIN passenger p ON t.id_psg=p.id_psg
+WHERE town_to='Moscow' AND t.id_psg IN (SELECT * FROM nm)
+GROUP BY t.id_psg, p.name
+HAVING count(*) > 1
