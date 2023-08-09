@@ -1,0 +1,11 @@
+Task:
+Get makers having most models in the Product table, as well as those having least.
+Output: maker, number of models.
+
+Solution:
+
+WITH t AS (SELECT maker, count(model) AS c FROM Product GROUP BY maker)
+
+SELECT maker, c FROM t WHERE c = (SELECT MAX(c) as max FROM t)
+UNION
+SELECT maker, c FROM t WHERE c = (SELECT MIN(c) as max FROM t)
