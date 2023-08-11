@@ -1,0 +1,9 @@
+Task:
+Determine the average quantity of paint per square with an accuracy of two decimal places.
+
+Solution:
+SELECT CAST(AVG(CAST(sum AS NUMERIC(6,2))) AS NUMERIC(6,2)) FROM 
+(SELECT B_Q_ID, sum(B_VOL) as sum from utb
+GROUP BY b_q_id
+UNION
+SELECT q_id, 0 FROM utq WHERE q_id NOT IN (SELECT b_q_id FROM utb)) aa
