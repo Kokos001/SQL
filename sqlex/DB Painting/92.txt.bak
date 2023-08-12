@@ -1,0 +1,6 @@
+SELECT Q_NAME FROM (
+SELECT Q_NAME, STRING_AGG(vol_c, '-') AS c FROM(
+SELECT Q_NAME, CONCAT(vol, v_color) as vol_c FROM t
+WHERE vol = 255) a
+GROUP BY Q_NAME) и
+WHERE c = '255B-255G-255R'

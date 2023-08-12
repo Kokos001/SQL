@@ -1,0 +1,18 @@
+Task:
+Get all white squares that have been painted only with spray cans empty at present.
+Output the square names.
+
+Solution:
+WITH t AS (
+    SELECT * FROM utq 
+    JOIN utb ON utq.Q_ID = utb.b_Q_ID
+    JOIN utv ON utb.b_v_ID = utv.V_ID
+),
+t1 AS (SELECT * FROM t WHERE v_id IN (SELECT v_id FROM (SELECT v_id FROM t GROUP BY v_id HAVING SUM (b_vol) = 255) a))
+
+SELECT Q_NAME FROM (
+SELECT Q_NAME, CONCAT(vol, v_color) as vol_c FROM (
+SELECT Q_NAME, SUM(B_VOL) as vol, V_COLOR FROM t1
+GROUP BY Q_NAME, V_COLOR
+HAVING SUM(B_VOL) = 255) b) c
+GROUP BY Q_NAME HAVING STRING_AGG(vol_c, '-') = '255B-255G-255R'
