@@ -1,0 +1,16 @@
+Task:
+For each airline that transported passengers calculate the total flight duration of its planes.
+Result set: company name, duration in minutes.
+
+Solution:
+WITH tb AS (SELECT DISTINCT ID_comp, pt.trip_no, date, time_out, time_in FROM pass_in_trip pt 
+JOIN (SELECT trip_no, ID_comp, time_out, time_in FROM trip) t
+ON t.trip_no=pt.trip_no)
+
+SELECT name, SUM(min) AS minutes FROM ( 
+
+SELECT ID_comp, CASE WHEN time_out < time_in THEN 
+DATEDIFF(MINUTE, time_out , time_in) ELSE 
+DATEDIFF(MINUTE, time_out , '1900-01-01 23:59:00.000')+1+DATEDIFF(MINUTE, '1900-01-01 00:01:00.000', time_in)+1
+END AS min FROM tb ) a JOIN Company  ON a.ID_comp = Company.ID_comp 
+GROUP BY name
