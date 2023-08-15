@@ -1,0 +1,28 @@
+Task:
+Using the Pass_in_Trip table, calculate for each airline:
+1) the number of performed flights;
+2) the number of plane types used;
+3) the number of different passengers that have been transported;
+4) the total number of passengers that have been transported by the company.
+Output: airline name, 1), 2), 3), 4).
+
+Solution:
+WITH t AS (SELECT c.name, pt.trip_no, date, ID_psg, plane
+FROM Pass_in_Trip pt JOIN Trip t
+ON pt.trip_no = t.trip_no JOIN Company c
+ON t.ID_comp = c.ID_comp), 
+
+f AS (SELECT name, COUNT(trip_no) flights FROM (SELECT DISTINCT name, trip_no, date FROM t) a 
+GROUP BY name),
+
+p AS (SELECT name, COUNT(plane) AS planes FROM (SELECT DISTINCT name, plane FROM t) b
+GROUP BY name),
+
+d AS (SELECT name, COUNT(ID_psg) AS diff FROM (SELECT DISTINCT name, ID_psg FROM t) c
+GROUP BY name),
+
+tot AS (SELECT name, COUNT(ID_psg) AS total FROM t GROUP BY name)
+
+SELECT f.*, planes, diff, total FROM f JOIN p ON f.name = p.name
+JOIN d ON f.name = d.name
+JOIN tot ON f.name = tot.name
