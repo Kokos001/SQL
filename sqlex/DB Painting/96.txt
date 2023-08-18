@@ -1,0 +1,18 @@
+Task:
+Considering only red spray cans used more than once, get those that painted squares currently having a non-zero blue component.
+Result set: spray can name.
+
+Solution:
+WITH L AS (SELECT V_ID  from utV JOIN utB 
+ON utv.V_ID = utB.B_V_ID
+WHERE V_COLOR = 'R'
+GROUP BY V_ID
+HAVING COUNT(B_DATETIME) > 1),
+
+ sq AS (SELECT DISTINCT B_Q_ID from utV JOIN utB 
+ON utv.V_ID = utB.B_V_ID
+WHERE V_COLOR = 'B')
+
+SELECT DISTINCT V_NAME from utV JOIN utB 
+ON utv.V_ID = utB.B_V_ID
+WHERE V_ID IN (SELECT * from L) AND B_Q_ID IN (SELECT * from sq)
