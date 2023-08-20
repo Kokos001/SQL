@@ -1,0 +1,15 @@
+Task:
+Display the list of PCs, for each of which the result of the bitwise OR operation performed on the binary representations of its respective processor speed and RAM capacity contains a sequence of at least four consecutive bits set to 1.
+Result set: PC code, processor speed, RAM capacity.
+
+Solution:
+WITH CTE AS (SELECT 1 n, cast (0 as varchar(16)) bit_or, code, speed, ram FROM PC
+UNION ALL
+select n*2,
+cast (convert(bit,(speed|ram)&n) as varchar(1))+cast(bit_or as varchar(15)),
+code, speed, ram
+FROM CTE WHERE n < 65536
+)
+
+SELECT code, speed, ram FROM CTE
+WHERE n = 65536 AND CHARINDEX('1111', bit_or )> 0

@@ -1,0 +1,16 @@
+Task:
+From the Laptop table, select rows fulfilling the following condition:
+the values of the speed, ram, price, and screen columns can be arranged in such a way that each successive value exceeds two or more times the previous one.
+Note: all known laptop characteristics are greater than zero.
+Output: code, speed, ram, price, screen.
+
+Solution:
+WITH t AS (SELECT row_number() over(partition BY code ORDER BY code,feat) num, feat, code FROM (SELECT speed feat, code FROM laptop
+UNION ALL
+SELECT ram, code FROM laptop
+UNION ALL
+SELECT price, code FROM laptop
+UNION ALL
+SELECT screen, code FROM laptop)aa)
+
+SELECT code,speed,ram,price,screen FROM laptop WHERE code in (SELECT code FROM (SELECT [code],[1],[2],[3],[4] FROM t x pivot (min(feat) for num in ([1],[2],[3],[4]))pvt)aa WHERE [4]/[3]>=2 AND [3]/[2]>=2 AND [2]/[1]>=2)
