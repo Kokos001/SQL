@@ -1,0 +1,14 @@
+Task:
+Assuming the PC table is sorted by code in ascending order, find the average price for each group of six consecutive personal computers.
+Result set: the first code value in a set of six records, average price for the respective set.
+
+Solution:
+WITH CTE(code,price,number)
+AS (SELECT PC.code,PC.price, number= ROW_NUMBER() OVER (ORDER BY PC.code)
+FROM PC)
+
+SELECT CTE.code, AVG(C.price)
+FROM CTE
+JOIN CTE C ON (C.number-CTE.number)<6 AND (C.number-CTE.number)> =0
+GROUP BY CTE.number,CTE.code
+HAVING COUNT(CTE.number)=6
