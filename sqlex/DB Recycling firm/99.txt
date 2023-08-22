@@ -1,0 +1,8 @@
+Task:
+Only Income_o and Outcome_o tables are considered. It is known that no money transactions are performed on Sundays.
+For each buy-back center (point) and each funds receipt date, determine the encashment date according to the following rules:
+1. The encashment date is the same as the receipt date if there is no payment entry in the Outcome_o table for this date and point.
+2. Otherwise, the first possible date after the receipt date is used that doesn’t fall on Sunday and doesn’t have a corresponding payment entry in the Outcome_o table for the point in question.
+Output: point, receipt date, encashment date.
+
+Solution:
