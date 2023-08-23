@@ -6,3 +6,10 @@ For each buy-back center (point) and each funds receipt date, determine the enca
 Output: point, receipt date, encashment date.
 
 Solution:
+WITH t AS (SELECT point, date, CASE WHEN out IS NULL THEN date ELSE dateadd(dd, CASE WHEN datename(dw,dateadd(dd, 1, date))='sunday' THEN 2 ELSE 1 END, date) END date2 FROM (SELECT a.*, b.out FROM income_o a LEFT JOIN outcome_o b on a.point=b.point AND a.date=b.date)aa)
+
+SELECT t.point, t.date, t.date2 FROM t
+EXCEPT
+SELECT t.point, t.date, t.date2 FROM t,outcome_o WHERE outcome_o.point=t.point AND t.date2=outcome_o.date
+UNION
+SELECT t.point,t.date, (SELECT dateadd(dd,case WHEN datename(dw,min(date))='saturday' THEN 2 ELSE 1 END, MIN(date)) FROM (SELECT point, date FROM outcome_o WHERE CONCAT(point, ' ',dateadd(dd, CASE WHEN datename(dw,date)='saturday' THEN 2 ELSE 1 END, date)) NOT IN (SELECT CONCAT(point,' ',date) FROM outcome_o))nn WHERE date>=t.date2 AND point=t.point) FROM t,outcome_o WHERE outcome_o.point=t.point AND t.date2=outcome_o.date
