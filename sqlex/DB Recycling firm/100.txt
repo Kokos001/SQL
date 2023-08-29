@@ -1,0 +1,5 @@
+Task:
+Write a query that displays all operations from the Income and Outcome tables as follows:
+date, sequential record number for this date, buy-back center receiving funds, funds received, buy-back center making a payment, payment amount.
+All revenue transactions for all centers made during a single day are ordered by the code field, and so are all expense transactions.
+If the numbers of revenue and expense transactions are different for a day, display NULL in the corresponding columns for missing operations.
