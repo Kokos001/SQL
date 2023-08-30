@@ -3,3 +3,14 @@ Write a query that displays all operations from the Income and Outcome tables as
 date, sequential record number for this date, buy-back center receiving funds, funds received, buy-back center making a payment, payment amount.
 All revenue transactions for all centers made during a single day are ordered by the code field, and so are all expense transactions.
 If the numbers of revenue and expense transactions are different for a day, display NULL in the corresponding columns for missing operations.
+
+Solution:
+SELECT DISTINCT A.date , A.R, B.point, B.inc, C.point, C.out
+FROM (SELECT DISTINCT date, ROW_Number() OVER(PARTITION BY date ORDER BY code ASC) AS R FROM Income
+UNION SELECT DISTINCT date, ROW_Number() OVER(PARTITION BY date ORDER BY code ASC) FROM Outcome) A
+LEFT JOIN (SELECT date, point, inc
+                , ROW_Number() OVER(PARTITION BY date ORDER BY code ASC) AS RI FROM Income
+           ) B ON B.date=A.date AND B.RI=A.R
+LEFT JOIN (SELECT date, point, out
+                , ROW_Number() OVER(PARTITION BY date ORDER BY code ASC) as RO FROM Outcome
+           ) C ON C.date=A.date AND C.RO=A.R
