@@ -1,0 +1,20 @@
+Task: 
+The Printer table is sorted by the code field in ascending order.
+The ordered rows form groups: the first group starts with the first row, each row having color=’n’ begins a new group, the groups of rows don’t overlap.
+For each group, determine the maximum value of the model field (max_model), the number of unique printer types (distinct_types_cou), and the average price (avg_price).
+For all table rows, display code, model, color, type, price, max_model, distinct_types_cou, avg_price.
+
+
+Solution:
+SELECT code, model, color, type, price,
+  MAX(model)OVER(PARTITION BY Grp)max_model,
+  MAX(CASE type WHEN'Laser'THEN 1 ELSE 0 END)OVER(PARTITION BY Grp)+
+  MAX(CASE type WHEN'Matrix'THEN 1 ELSE 0 END)OVER(PARTITION BY Grp)+
+  MAX(CASE type WHEN'Jet'THEN 1 ELSE 0 END)OVER(PARTITION BY Grp)distinct_types,
+  AVG(price)OVER(PARTITION BY Grp)
+FROM(
+  SELECT *,
+    CASE color WHEN'n'THEN 0 ELSE ROW_NUMBER()OVER(ORDER BY code)END+
+    CASE color WHEN'n'THEN 1 ELSE-1 END*ROW_NUMBER()OVER(PARTITION BY color ORDER BY code)Grp
+  FROM Printer
+)T
