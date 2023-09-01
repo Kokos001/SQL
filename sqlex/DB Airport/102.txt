@@ -1,0 +1,14 @@
+Task:
+Find the names of different passengers who travelled between two towns only (one way or back and forth)
+
+Solution:
+WITH T AS (SELECT DISTINCT ID_psg, town_from, town_to FROM Trip t JOIN Pass_in_trip p
+ON t.trip_no = p.trip_no)
+
+SELECT name FROM Passenger pas JOIN (
+SELECT ID_psg FROM (
+SELECT ID_psg, town_from as town FROM T
+UNION 
+SELECT ID_psg, town_to FROM T) a
+GROUP BY ID_psg HAVING COUNT(town) = 2) b
+ON pas.ID_psg = b.ID_psg
