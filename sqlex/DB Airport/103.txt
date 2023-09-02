@@ -1,0 +1,23 @@
+Task: 
+Find out the three smallest and three greatest trip numbers. Output them in a single row with six columns, ordered from the least trip number to the greatest one.
+Note: it is assumed the Trip table contains 6 or more rows.
+
+
+Solution:
+SELECT
+    MAX(CASE WHEN rn = 1 THEN trip_no ELSE NULL END) AS Column1,
+    MAX(CASE WHEN rn = 2 THEN trip_no ELSE NULL END) AS Column2,
+    MAX(CASE WHEN rn = 3 THEN trip_no ELSE NULL END) AS Column3,
+    MAX(CASE WHEN rn = 4 THEN trip_no ELSE NULL END) AS Column4,
+    MAX(CASE WHEN rn = 5 THEN trip_no ELSE NULL END) AS Column5,
+    MAX(CASE WHEN rn = 6 THEN trip_no ELSE NULL END) AS Column6
+FROM (
+    SELECT trip_no, ROW_NUMBER() OVER (ORDER BY trip_no) AS rn
+    FROM (
+        SELECT TOP 3 trip_no FROM Trip
+        ORDER BY trip_no
+        UNION ALL
+        SELECT TOP 3 trip_no FROM Trip
+        ORDER BY trip_no DESC
+    ) AS subquery
+) AS numbered_results
