@@ -1,0 +1,5 @@
+Task:
+For each cruiser class whose quantity of guns is known, number its guns sequentially beginning with 1.
+Output: class name, gun ordinal number in 'bc-N' style.
+
+Solution:
