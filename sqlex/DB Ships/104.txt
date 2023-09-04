@@ -3,3 +3,17 @@ For each cruiser class whose quantity of guns is known, number its guns sequenti
 Output: class name, gun ordinal number in 'bc-N' style.
 
 Solution:
+WITH tab AS (
+  SELECT class, numGuns, CAST(numGuns AS INTEGER) AS n 
+  FROM Classes
+  WHERE type = 'bc'
+),
+rec AS (
+  SELECT * FROM tab
+  UNION ALL 
+  SELECT r.class, r.numGuns, CASE WHEN r.n > 1 THEN r.n - 1 END
+  FROM rec r
+  WHERE r.n > 0
+)
+SELECT class, CONCAT('bc-', n) FROM rec
+WHERE n IS NOT NULL
