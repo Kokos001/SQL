@@ -1,0 +1,15 @@
+Task:
+Let v1, v2, v3, v4, ... be a sequence of real numbers corresponding to paint amounts b_vol, sorted by b_datetime, b_q_id, and b_v_id in ascending order.
+Find the transformed sequence P1=v1, P2=v1/v2, P3=v1/v2*v3, P4=v1/v2*v3/v4, ..., where each subsequent member is obtained from the preceding one by either multiplication by vi (for an odd i) or division by vi (for an even i).
+Output the result as b_datetime, b_q_id, b_v_id, b_vol, Pi, with Pi being the member of the sequence corresponding to the record number i. Display Pi with eight decimal places.
+
+
+Solution:
+WITH a AS(
+SELECT *, ROW_NUMBER() OVER (ORDER BY b_datetime,b_q_id,b_v_id) n FROM utb)
+
+SELECT b_datetime,b_q_id,b_v_id,b_vol,
+CAST(exp(sm1)/exp(sm2) AS numeric(12,8)) k
+FROM a x
+CROSS APPLY
+(SELECT SUM( iif(n%2<> 0,log(b_vol),0)) sm1, SUM( iif(n%2=0,log(b_vol),0)) sm2 FROM a WHERE n<=x.n) y
