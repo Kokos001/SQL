@@ -1,0 +1,13 @@
+Task:
+Find the company, trip number, and trip date for the fifth passenger from among those who have departed from Rostov in April 2003.
+Note. For this exercise it is assumed two flights can’t depart from Rostov simultaneously.
+
+Solution:
+
+SELECT name, trip_no, date  FROM (
+SELECT p.date, t.trip_no, name, ROW_NUMBER() OVER (ORDER BY date, time_out) AS N FROM Trip t
+JOIN Pass_in_trip p 
+ON t.trip_no = p.trip_no
+JOIN Company c ON t.ID_comp = c.ID_comp
+WHERE town_from = 'Rostov' AND date BETWEEN '2003-04-01 00:00:00.000' AND '2003-04-30 00:00:00.000') a
+WHERE N = 5
