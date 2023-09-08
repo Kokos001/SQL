@@ -1,0 +1,6 @@
+Task:
+The restoration of the exhibits of the Triangles department of the PFAS museum has been carried out according to the performance specification. For each record in the utb table, the painters restored the paint on the side of every geometric figure, provided this side had a length equal to b_vol.
+Get all triangles having the paint on all their sides restored, except for equilateral, isosceles, and obtuse ones.
+For each triangle (yet without duplicates), display three values X, Y, Z, where X is the length of the short, Y – of the medium, and Z – of the long triangle side.
+
+Solution:
