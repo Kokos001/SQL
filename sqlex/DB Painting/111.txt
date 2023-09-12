@@ -1,0 +1,4 @@
+Task:
+Get the squares that are NEITHER white NOR black, and painted with different colors in a 1:1:1 ratio. Result set: square name, paint quantity for a single color.
+
+Solution:
