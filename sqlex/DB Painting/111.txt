@@ -2,3 +2,20 @@ Task:
 Get the squares that are NEITHER white NOR black, and painted with different colors in a 1:1:1 ratio. Result set: square name, paint quantity for a single color.
 
 Solution:
+WITH t AS (SELECT B_Q_ID, V_COLOR, sum(B_VOL) vol
+FROM utB, utV
+WHERE B_V_ID=V_ID
+GROUP BY B_Q_ID, V_COLOR
+HAVING SUM(B_VOL) != 0 AND SUM(B_VOL) != 255)
+
+
+SELECT B_Q_ID, AVG(vol) AS V
+FROM t 
+WHERE B_Q_ID IN (
+    SELECT B_Q_ID 
+    FROM t 
+    GROUP BY B_Q_ID
+    HAVING COUNT(DISTINCT V_COLOR) = 3
+)
+GROUP BY B_Q_ID
+HAVING MIN(vol) = MAX(vol)
