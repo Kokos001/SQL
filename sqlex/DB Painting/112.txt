@@ -1,0 +1,15 @@
+Task:
+What maximal number of black squares could be colored white using the remaining paint?
+
+
+Solution:
+WITH t AS (SELECT V_color, SUM(cnt) as All_sum FROM (
+SELECT V_color, 255 as cnt FROM utv) a
+GROUP BY V_color),
+
+sp AS (SELECT V_color, SUM(B_VOL) as spent FROM utB JOIN utv
+ON utB.B_V_ID = utv.V_ID 
+GROUP BY V_COLOR)
+
+SELECT FLOOR(MIN(d)/ 255) FROM (SELECT t.V_color, All_sum - spent AS d FROM t JOIN sp 
+ON t.V_color = sp.V_color) x
